@@ -3,14 +3,21 @@ import express, { Request, Response } from 'express';
 import http from 'http';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
-import connectDatabase from './config/database.config';
 import { Env } from './config/env.config';
-
+import { asyncHandler } from './middlewares/asyncHandler.middleware';
+import { HTTPSTATUS } from './config/http.config';
+import { error } from 'console';
+import { errorHandler } from './middlewares/error.midddlerware';
+import connectDatabase from './config/database.config';
+import passport, { initialize } from 'passport';
+import router from './routes';
+import { initializeSocket } from './lib/socket';
 
 const app = express();
 const server = http.createServer(app);
 
+//socket initialization
+initializeSocket(server);
 
 app.use(express.json({limit : "10mb"})); 
 app.use(cookieParser());
@@ -22,6 +29,22 @@ app.use(
   })
 );
 
+app.use(passport.initialize()); // passport initialization
+
+
+app.get(
+  "/health",
+  asyncHandler(async (req: Request, res: Response) => {
+    res.status(HTTPSTATUS.OK).json({
+      message: "Server is healthy",
+      status: "OK",
+    });
+  })
+);
+ 
+app.use('/api', router)
+
+app.use(errorHandler)
 
 server.listen(Env.PORT, async () => {
     await connectDatabase();
