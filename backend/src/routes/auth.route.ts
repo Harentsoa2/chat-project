@@ -1,11 +1,7 @@
 import { Router } from "express";
-import {
-  loginController,
-  logoutController,
-  registerController,
-  authStatusController,
-} from "../controllers/auth.controller";
+
 import { passportAuthenticateJwt } from "../config/passport.config";
+import { authStatusController, loginController, logoutController, registerController } from "../controller/auth.controller";
 
 const authRoutes = Router()
   .post("/register", registerController)
