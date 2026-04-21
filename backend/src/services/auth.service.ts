@@ -1,6 +1,6 @@
 import UserModel from "../models/user.model";
 import { NotFoundException, UnauthorizedException } from "../utils/app-error";
-import { LoginSchemaType, RegisterSchemaType } from "../validator/auth.validator";
+import { LoginSchemaType, RegisterSchemaType } from "../validators/auth.validator";
 
 
 

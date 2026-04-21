@@ -44,6 +44,17 @@ app.get(
  
 app.use('/api', router)
 
+if (process.env.NODE_ENV === "production") {
+  const clientPath = require("path").resolve(__dirname, "../../client/dist");
+
+  // Serve static files
+  app.use(require("express").static(clientPath));
+
+  app.get(/^(?!\/api).* /, (req, res) => {
+    res.sendFile(require("path").join(clientPath, "index.html"));
+  });
+}
+
 app.use(errorHandler)
 
 server.listen(Env.PORT, async () => {

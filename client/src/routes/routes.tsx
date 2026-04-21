@@ -18,11 +18,15 @@ export const PROTECTED_ROUTES = {
 export const authRoutesPaths = [
   {
     path: AUTH_ROUTES.SIGN_IN,
-    element: <SignIn />,
+    element: <SignIn onSwitch={function (): void {
+      throw new Error("Function not implemented.");
+    } } />,
   },
   {
     path: AUTH_ROUTES.SIGN_UP,
-    element: <SignUp />,
+    element: <SignUp onSwitch={function (): void {
+      throw new Error("Function not implemented.");
+    } } />,
   },
 ];
 

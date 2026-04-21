@@ -15,15 +15,14 @@ import Logo from "@/components/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { Link } from "react-router-dom";
 
-const SignIn = () => {
+const SignIn = ({ onSwitch }: { onSwitch: () => void }) => {
   const { login, isLoggingIn } = useAuth();
 
   const formSchema = z.object({
     email: z.string().email("Invalid email").min(1, "Email is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-  }); // verification
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,7 +30,7 @@ const SignIn = () => {
       email: "",
       password: "",
     },
-  }); // initialisation
+  });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (isLoggingIn) return;
@@ -39,26 +38,19 @@ const SignIn = () => {
   };
 
   return (
-    <div
-      className="
-  flex
-   min-h-svh
-   items-center
-   justify-center bg-muted p-6
-   "
-    >
+    // <div className="flex min-h-svh items-center justify-center bg-muted p-6">
+    <div className="w-full">
       <div className="w-full max-w-sm">
         <Card>
-          <CardHeader className="flex flex-col items-center justify-center gap-3">
+          <CardHeader className="flex flex-col items-center gap-3">
             <Logo />
-            <CardTitle className="text-xl">Create your account</CardTitle>
+            <CardTitle className="text-xl">Sign in</CardTitle>
           </CardHeader>
+
           <CardContent>
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid gap-4"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+                
                 <FormField
                   control={form.control}
                   name="email"
@@ -66,11 +58,7 @@ const SignIn = () => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="johndoe@example.com"
-                          {...field}
-                        />
+                        <Input type="email" placeholder="johndoe@example.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -84,11 +72,7 @@ const SignIn = () => {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="******"
-                          type="password"
-                          {...field}
-                        />
+                        <Input type="password" placeholder="******" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -100,11 +84,16 @@ const SignIn = () => {
                 </Button>
 
                 <div className="text-center text-sm">
-                  Dont have an account?{" "}
-                  <Link to="/sign-up" className="underline">
+                  Don't have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={onSwitch}
+                    className="underline"
+                  >
                     Sign Up
-                  </Link>
+                  </button>
                 </div>
+
               </form>
             </Form>
           </CardContent>

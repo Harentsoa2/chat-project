@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
-import { loginSchema, registerSchema } from "../validators/auth.validator";
 import { loginService, registerService } from "../services/auth.service";
 import { clearJwtAuthCookie, setJwtAuthCookie } from "../utils/cookie";
 import { HTTPSTATUS } from "../config/http.config";
+import { loginSchema, registerSchema } from "../validators/auth.validator";
 
 export const registerController = asyncHandler(
   async (req: Request, res: Response) => {

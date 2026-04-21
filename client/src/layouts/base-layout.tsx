@@ -1,6 +1,13 @@
 import { Outlet } from "react-router-dom";
+import LandingPage from "@/components/landing-page/landingPage";
 
 const BaseLayout = () => {
+  const isLandingPage = true; 
+  
+  if(isLandingPage) {
+    return <LandingPage/>
+  }
+
   return (
     <div className="flex flex-col w-full h-auto">
       <div
